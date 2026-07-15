@@ -1,13 +1,15 @@
-package com.gft.products.similarproducts.client;
+package com.gft.products.similarproducts.application.port.out;
 
-import com.gft.products.similarproducts.ProductDetail;
+import com.gft.products.similarproducts.domain.ProductDetail;
 
 import java.util.List;
 
 /**
- * Port towards the existing (already agreed) product catalog APIs.
+ * Outbound port towards the existing (already agreed) product catalog APIs.
+ * The application core depends only on this abstraction, never on the
+ * concrete HTTP integration.
  */
-public interface ExistingProductsClient {
+public interface ExistingProductsPort {
 
     /**
      * @return ids of the products similar to {@code productId}, ordered by similarity.

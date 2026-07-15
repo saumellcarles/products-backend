@@ -1,4 +1,4 @@
-package com.gft.products.similarproducts.client;
+package com.gft.products.similarproducts.application.port.out;
 
 /**
  * The upstream catalog failed, timed out, or returned an unexpected response

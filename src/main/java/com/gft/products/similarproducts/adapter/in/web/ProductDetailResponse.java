@@ -1,6 +1,6 @@
-package com.gft.products.similarproducts.web;
+package com.gft.products.similarproducts.adapter.in.web;
 
-import com.gft.products.similarproducts.ProductDetail;
+import com.gft.products.similarproducts.domain.ProductDetail;
 
 import java.math.BigDecimal;
 

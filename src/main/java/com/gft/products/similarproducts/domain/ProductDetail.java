@@ -1,4 +1,4 @@
-package com.gft.products.similarproducts;
+package com.gft.products.similarproducts.domain;
 
 import java.math.BigDecimal;
 

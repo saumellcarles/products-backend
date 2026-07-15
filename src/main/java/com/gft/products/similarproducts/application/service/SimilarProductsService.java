@@ -1,6 +1,8 @@
-package com.gft.products.similarproducts;
+package com.gft.products.similarproducts.application.service;
 
-import com.gft.products.similarproducts.client.ExistingProductsClient;
+import com.gft.products.similarproducts.application.port.in.SimilarProductsUseCase;
+import com.gft.products.similarproducts.application.port.out.ExistingProductsPort;
+import com.gft.products.similarproducts.domain.ProductDetail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -20,20 +22,21 @@ import java.util.concurrent.ExecutorService;
  * the whole request; the remaining products still come back in similarity order.
  */
 @Service
-public class SimilarProductsService {
+class SimilarProductsService implements SimilarProductsUseCase {
 
     private static final Logger log = LoggerFactory.getLogger(SimilarProductsService.class);
 
-    private final ExistingProductsClient existingProductsClient;
+    private final ExistingProductsPort existingProductsPort;
     private final ExecutorService similarProductsExecutor;
 
-    SimilarProductsService(ExistingProductsClient existingProductsClient, ExecutorService similarProductsExecutor) {
-        this.existingProductsClient = existingProductsClient;
+    SimilarProductsService(ExistingProductsPort existingProductsPort, ExecutorService similarProductsExecutor) {
+        this.existingProductsPort = existingProductsPort;
         this.similarProductsExecutor = similarProductsExecutor;
     }
 
+    @Override
     public List<ProductDetail> findSimilarProducts(String productId) {
-        List<String> similarProductIds = existingProductsClient.getSimilarProductIds(productId);
+        List<String> similarProductIds = existingProductsPort.getSimilarProductIds(productId);
 
         List<CompletableFuture<Optional<ProductDetail>>> detailFutures = similarProductIds.stream()
                 .map(similarProductId -> CompletableFuture.supplyAsync(
@@ -48,7 +51,7 @@ public class SimilarProductsService {
 
     private Optional<ProductDetail> fetchDetailSafely(String similarProductId) {
         try {
-            return Optional.of(existingProductsClient.getProductDetail(similarProductId));
+            return Optional.of(existingProductsPort.getProductDetail(similarProductId));
         } catch (RuntimeException e) {
             log.warn("Omitting similar product {}: {}", similarProductId, e.getMessage());
             return Optional.empty();
