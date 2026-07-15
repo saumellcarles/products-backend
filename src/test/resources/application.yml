@@ -1,0 +1,5 @@
+upstream:
+  connect-timeout: 500ms
+  response-timeout: 500ms
+  max-connections: 50
+  max-connections-per-route: 50
