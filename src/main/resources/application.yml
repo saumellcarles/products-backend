@@ -1,0 +1,20 @@
+server:
+  port: 5000
+
+spring:
+  application:
+    name: products-backend
+  threads:
+    virtual:
+      enabled: true
+
+upstream:
+  base-url: http://localhost:3001
+  connect-timeout: 2s
+  response-timeout: 6s
+  max-connections: 200
+  max-connections-per-route: 200
+
+logging:
+  level:
+    com.gft.products: INFO
