@@ -2,7 +2,6 @@ package com.gft.products.error;
 
 import com.gft.products.similarproducts.application.port.out.ProductNotFoundException;
 import com.gft.products.similarproducts.application.port.out.UpstreamUnavailableException;
-import jakarta.validation.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -28,11 +27,6 @@ class GlobalExceptionHandler {
     ResponseEntity<ErrorResponse> handleUpstreamUnavailable(UpstreamUnavailableException e) {
         log.error("Upstream dependency failure", e);
         return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(new ErrorResponse("Upstream service unavailable"));
-    }
-
-    @ExceptionHandler(ConstraintViolationException.class)
-    ResponseEntity<ErrorResponse> handleValidationFailure(ConstraintViolationException e) {
-        return ResponseEntity.badRequest().body(new ErrorResponse("Invalid request"));
     }
 
     @ExceptionHandler(Exception.class)

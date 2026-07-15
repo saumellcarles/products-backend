@@ -1,17 +1,21 @@
 package com.gft.products.similarproducts.adapter.in.web;
 
+import com.gft.products.openapi.api.SimilarProductsApi;
+import com.gft.products.openapi.model.ProductDetail;
 import com.gft.products.similarproducts.application.port.in.SimilarProductsUseCase;
-import jakarta.validation.constraints.NotBlank;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+/**
+ * Driving adapter implementing the interface generated from the agreed
+ * {@code similarProducts.yaml} contract (API-first).
+ */
 @RestController
-@Validated
-class SimilarProductsController {
+class SimilarProductsController implements SimilarProductsApi {
 
     private final SimilarProductsUseCase similarProductsUseCase;
 
@@ -19,10 +23,14 @@ class SimilarProductsController {
         this.similarProductsUseCase = similarProductsUseCase;
     }
 
-    @GetMapping("/product/{productId}/similar")
-    List<ProductDetailResponse> getSimilarProducts(@PathVariable @NotBlank String productId) {
-        return similarProductsUseCase.findSimilarProducts(productId).stream()
-                .map(ProductDetailResponse::from)
-                .toList();
+    @Override
+    public ResponseEntity<Set<ProductDetail>> getProductSimilar(String productId) {
+        // A LinkedHashSet is required (not a plain HashSet) to preserve the
+        // similarity order the contract mandates while still satisfying the
+        // generated Set<ProductDetail> return type (uniqueItems: true).
+        Set<ProductDetail> similarProducts = similarProductsUseCase.findSimilarProducts(productId).stream()
+                .map(ProductDetailApiMapper::toApiModel)
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+        return ResponseEntity.ok(similarProducts);
     }
 }
