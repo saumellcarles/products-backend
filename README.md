@@ -177,4 +177,24 @@ mvn test
   was chosen over standing up the reference harness's own mock server so
   the whole suite runs with a plain `mvn test`, with no Docker
   dependency — Docker isn't available in the environment this was built in.
-# products-backend
+
+## Load testing (k6)
+
+`k6/load-test.js` drives the same resilience scenarios as the integration
+tests (normal, a similar product that 404s, one that 5xxs, one that times
+out, the root lookup 404ing, and the root lookup's upstream call failing)
+under sustained concurrent load, against static WireMock stub mappings in
+`k6/wiremock/mappings` standing in for the upstream catalog.
+
+**Locally:**
+
+```
+java -jar wiremock-standalone-3.13.2.jar --port 3001 --root-dir k6/wiremock &
+UPSTREAM_BASE_URL=http://localhost:3001 UPSTREAM_RESPONSE_TIMEOUT=1s mvn spring-boot:run &
+k6 run k6/load-test.js
+```
+
+**In CI:** the `k6-load-test` job in `.github/workflows/ci.yml` packages
+the app, boots it against the same WireMock stubs, runs the script, and
+uploads `k6/summary.json`/`k6/summary.html` as a workflow artifact for
+every push/PR to `main`.
