@@ -1,0 +1,9 @@
+{
+  "request": { "method": "GET", "url": "/product/70" },
+  "response": {
+    "status": 200,
+    "headers": { "Content-Type": "application/json" },
+    "jsonBody": { "id": "70", "name": "Trousers", "price": 49.99, "availability": false },
+    "fixedDelayMilliseconds": 1500
+  }
+}

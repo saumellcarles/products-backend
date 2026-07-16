@@ -1,0 +1,4 @@
+{
+  "request": { "method": "GET", "url": "/product/998/similarids" },
+  "response": { "status": 500 }
+}

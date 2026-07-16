@@ -1,0 +1,8 @@
+{
+  "request": { "method": "GET", "url": "/product/6/similarids" },
+  "response": {
+    "status": 200,
+    "headers": { "Content-Type": "application/json" },
+    "jsonBody": ["2", "60"]
+  }
+}

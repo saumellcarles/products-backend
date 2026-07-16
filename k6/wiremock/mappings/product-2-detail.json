@@ -1,0 +1,8 @@
+{
+  "request": { "method": "GET", "url": "/product/2" },
+  "response": {
+    "status": 200,
+    "headers": { "Content-Type": "application/json" },
+    "jsonBody": { "id": "2", "name": "Dress", "price": 19.99, "availability": true }
+  }
+}

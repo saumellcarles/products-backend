@@ -1,0 +1,4 @@
+{
+  "request": { "method": "GET", "url": "/product/60" },
+  "response": { "status": 500 }
+}

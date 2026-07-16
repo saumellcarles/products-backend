@@ -1,0 +1,8 @@
+{
+  "request": { "method": "GET", "url": "/product/4" },
+  "response": {
+    "status": 200,
+    "headers": { "Content-Type": "application/json" },
+    "jsonBody": { "id": "4", "name": "Boots", "price": 39.99, "availability": true }
+  }
+}

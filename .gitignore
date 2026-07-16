@@ -32,6 +32,10 @@ bin/
 ### Maven ###
 target/
 
+### k6 ###
+k6/summary.json
+k6/summary.html
+
 ### IntelliJ IDEA (project files) ###
 .idea/
 *.iml

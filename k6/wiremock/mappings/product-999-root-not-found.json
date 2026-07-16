@@ -1,0 +1,8 @@
+{
+  "request": { "method": "GET", "url": "/product/999/similarids" },
+  "response": {
+    "status": 404,
+    "headers": { "Content-Type": "application/json" },
+    "jsonBody": { "message": "Product not found" }
+  }
+}

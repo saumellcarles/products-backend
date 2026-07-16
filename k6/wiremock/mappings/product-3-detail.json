@@ -1,0 +1,8 @@
+{
+  "request": { "method": "GET", "url": "/product/3" },
+  "response": {
+    "status": 200,
+    "headers": { "Content-Type": "application/json" },
+    "jsonBody": { "id": "3", "name": "Blazer", "price": 29.99, "availability": false }
+  }
+}
