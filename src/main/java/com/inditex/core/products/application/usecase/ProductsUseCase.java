@@ -1,5 +1,6 @@
 package com.inditex.core.products.application.usecase;
 
+import com.inditex.core.products.application.port.in.ProductsUseCasePort;
 import com.inditex.core.products.application.port.out.ProductsPort;
 import com.inditex.core.products.domain.model.ProductDetail;
 import org.slf4j.Logger;
@@ -21,7 +22,7 @@ import java.util.concurrent.ExecutorService;
  * the whole request; the remaining products still come back in similarity order.
  */
 @Service
-class ProductsUseCase implements com.inditex.core.products.application.port.in.ProductsUseCase {
+class ProductsUseCase implements ProductsUseCasePort {
 
     private static final Logger log = LoggerFactory.getLogger(ProductsUseCase.class);
 

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Inbound port: what a driving adapter (e.g. the REST controller) can ask the application core to do.
  */
-public interface ProductsUseCase {
+public interface ProductsUseCasePort {
 
     /**
      * @return the products similar to {@code productId}, ordered by similarity. A similar

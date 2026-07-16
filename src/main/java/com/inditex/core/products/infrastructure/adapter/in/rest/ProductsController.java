@@ -2,7 +2,7 @@ package com.inditex.core.products.infrastructure.adapter.in.rest;
 
 import com.inditex.core.openapi.api.ProductsApi;
 import com.inditex.core.openapi.model.ProductDetailDTO;
-import com.inditex.core.products.application.port.in.ProductsUseCase;
+import com.inditex.core.products.application.port.in.ProductsUseCasePort;
 import com.inditex.core.products.infrastructure.adapter.in.rest.mapper.ProductDetailApiMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,11 +18,11 @@ import java.util.stream.Collectors;
 @RestController
 class ProductsController implements ProductsApi {
 
-    private final ProductsUseCase productsUseCase;
+    private final ProductsUseCasePort productsUseCasePort;
     private final ProductDetailApiMapper productDetailApiMapper;
 
-    ProductsController(ProductsUseCase productsUseCase, ProductDetailApiMapper productDetailApiMapper) {
-        this.productsUseCase = productsUseCase;
+    ProductsController(ProductsUseCasePort productsUseCasePort, ProductDetailApiMapper productDetailApiMapper) {
+        this.productsUseCasePort = productsUseCasePort;
         this.productDetailApiMapper = productDetailApiMapper;
     }
 
@@ -31,7 +31,7 @@ class ProductsController implements ProductsApi {
         // A LinkedHashSet is required (not a plain HashSet) to preserve the
         // similarity order the contract mandates while still satisfying the
         // generated Set<ProductDetailDTO> return type (uniqueItems: true).
-        Set<ProductDetailDTO> products = productsUseCase.findProducts(productId).stream()
+        Set<ProductDetailDTO> products = productsUseCasePort.findProducts(productId).stream()
                 .map(productDetailApiMapper::toApiModel)
                 .collect(Collectors.toCollection(LinkedHashSet::new));
         return ResponseEntity.ok(products);
