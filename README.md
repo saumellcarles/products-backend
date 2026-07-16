@@ -177,15 +177,4 @@ mvn test
   was chosen over standing up the reference harness's own mock server so
   the whole suite runs with a plain `mvn test`, with no Docker
   dependency — Docker isn't available in the environment this was built in.
-
-## Possible follow-ups (deliberately left out for now)
-
-- **Resilience4j circuit breaker** around the upstream client: not added
-  because per-call timeouts plus a bounded connection pool already give
-  fail-fast behavior under the load profile this was built against;
-  worth adding if the upstream is expected to have sustained outages
-  rather than per-call slowness.
-- **Actuator health/metrics endpoints**: not part of the agreed contract
-  and would add a dependency and surface area not asked for; straightforward
-  to add if this were to run in a real environment with monitoring.
 # products-backend
