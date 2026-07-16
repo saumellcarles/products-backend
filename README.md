@@ -131,21 +131,6 @@ call site) to satisfy both constraints at once.
 
 ## Running it
 
-**Locally:**
-
-```
-mvn spring-boot:run
-```
-
-The app listens on port `5000` (hard requirement from the agreed
-contract). On macOS, port `5000` is commonly already bound by the
-AirPlay Receiver (`ControlCenter`) — if `spring-boot:run` fails with
-"port 5000 was already in use", disable AirPlay Receiver under
-*System Settings → General → AirDrop & Handoff*, or run with
-`--server.port=<other>` for local testing only.
-
-**With Docker:**
-
 ```
 docker compose up --build
 ```
@@ -186,15 +171,7 @@ out, the root lookup 404ing, and the root lookup's upstream call failing)
 under sustained concurrent load, against static WireMock stub mappings in
 `k6/wiremock/mappings` standing in for the upstream catalog.
 
-**Locally:**
-
-```
-java -jar wiremock-standalone-3.13.2.jar --port 3001 --root-dir k6/wiremock &
-UPSTREAM_BASE_URL=http://localhost:3001 UPSTREAM_RESPONSE_TIMEOUT=1s mvn spring-boot:run &
-k6 run k6/load-test.js
-```
-
-**In CI:** the `k6-load-test` job in `.github/workflows/ci.yml` packages
-the app, boots it against the same WireMock stubs, runs the script, and
-uploads `k6/summary.json`/`k6/summary.html` as a workflow artifact for
-every push/PR to `main`.
+The `k6-load-test` job in `.github/workflows/ci.yml` packages the app,
+boots it against the same WireMock stubs, runs the script, and uploads
+`k6/summary.json`/`k6/summary.html` as a workflow artifact for every
+push/PR to `main`.
